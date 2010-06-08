@@ -1,11 +1,6 @@
 local elapsed = 0.5
 local addon = CreateFrame('Frame')
 local dataobj = LibStub:GetLibrary('LibDataBroker-1.1'):NewDataObject('Spec', {text = 'no spec', icon = "Interface\\Icons\\Spell_Shadow_SacrificialShield", iconCoords = {0.065, 0.935, 0.065, 0.935}})
-local defaults = {
-	colors = {0, 1, 1},
-	sorted = true,
-	hooked = true,
-}
 
 function dataobj.OnLeave()
 	GameTooltip:SetClampedToScreen(true)
