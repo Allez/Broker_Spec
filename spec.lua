@@ -10,7 +10,7 @@ function dataobj.OnEnter(self)
 	GameTooltip:SetOwner(self, 'ANCHOR_BOTTOMLEFT', 0, self:GetHeight())
 	GameTooltip:AddLine("Talents")
 	GameTooltip:AddLine("Hint: left-click to show talents frame.")
-	GameTooltip:AddLine("right-click to switch talents.")
+	GameTooltip:AddLine("right-click to switch spec.")
 	GameTooltip:Show()
 end
 
@@ -42,6 +42,6 @@ end
 
 local addon = CreateFrame('Frame')
 addon:SetScript('OnEvent', OnEvent)
+addon:RegisterEvent("CHARACTER_POINTS_CHANGED")
 addon:RegisterEvent("PLAYER_ENTERING_WORLD")
-addon:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
 addon:RegisterEvent("PLAYER_TALENT_UPDATE")
