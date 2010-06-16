@@ -26,7 +26,7 @@ function dataobj.OnClick(self, button)
 	end
 end
 
-local OnEvent = function(self, event, ...)
+local OnEvent = function(self, ...)
 	local maxPoints, finalIcon, text = 0, "Interface\\Icons\\Spell_Shadow_SacrificialShield"
 	for tab = 1, 3 do
 		local _, icon, points = GetTalentTabInfo(tab,nil,nil,group)
@@ -38,10 +38,14 @@ local OnEvent = function(self, event, ...)
 	end
 	dataobj.text = text
 	dataobj.icon = finalIcon
+	if text ~= "00/00/00" then
+		self:SetScript('OnUpdate', nil)
+	end
 end
 
 local addon = CreateFrame('Frame')
 addon:SetScript('OnEvent', OnEvent)
+addon:SetScript('OnUpdate', OnEvent)
 addon:RegisterEvent("CHARACTER_POINTS_CHANGED")
 addon:RegisterEvent("PLAYER_ENTERING_WORLD")
 addon:RegisterEvent("PLAYER_TALENT_UPDATE")
