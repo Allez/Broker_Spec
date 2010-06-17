@@ -1,6 +1,6 @@
 ## Interface: 30300
 ## Author: Allez
-## Version: 30300.1
+## Version: 30300.2
 ## Title: Broker Spec
 ## Notes: Spec Switcher for LDB
 
