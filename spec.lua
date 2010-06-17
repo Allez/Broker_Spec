@@ -1,4 +1,4 @@
-local elapsed = 0.5
+local timer = 0.5
 local dataobj = LibStub:GetLibrary('LibDataBroker-1.1'):NewDataObject('Spec', {type = "data source", text = 'no spec', icon = "Interface\\Icons\\Spell_Shadow_SacrificialShield", iconCoords = {0.065, 0.935, 0.065, 0.935}})
 
 function dataobj.OnLeave()
@@ -26,26 +26,33 @@ function dataobj.OnClick(self, button)
 	end
 end
 
-local OnEvent = function(self, ...)
-	local maxPoints, finalIcon, text = 0, "Interface\\Icons\\Spell_Shadow_SacrificialShield"
-	for tab = 1, 3 do
-		local _, icon, points = GetTalentTabInfo(tab,nil,nil,group)
-		if points > maxPoints then
-			maxPoints = points
-			finalIcon = icon
+local OnUpdate = function(self, elapsed)
+	timer = timer + elapsed
+	if timer > 0.5 then
+		local maxPoints, finalIcon, text = 0, "Interface\\Icons\\Spell_Shadow_SacrificialShield"
+		for tab = 1, 3 do
+			local _, icon, points = GetTalentTabInfo(tab,nil,nil,group)
+			if points > maxPoints then
+				maxPoints = points
+				finalIcon = icon
+			end
+			text = format("%s%.2i", text and text.."/" or "", points)
 		end
-		text = format("%s%.2i", text and text.."/" or "", points)
+		dataobj.text = text
+		dataobj.icon = finalIcon
+		if text ~= "00/00/00" then
+			self:SetScript('OnUpdate', nil)
+		end
+		timer = 0
 	end
-	dataobj.text = text
-	dataobj.icon = finalIcon
-	if text ~= "00/00/00" then
-		self:SetScript('OnUpdate', nil)
-	end
+end
+
+local OnEvent = function(self, event, ...)
+	self:SetScript('OnUpdate', OnUpdate)
 end
 
 local addon = CreateFrame('Frame')
 addon:SetScript('OnEvent', OnEvent)
-addon:SetScript('OnUpdate', OnEvent)
 addon:RegisterEvent("CHARACTER_POINTS_CHANGED")
 addon:RegisterEvent("PLAYER_ENTERING_WORLD")
 addon:RegisterEvent("PLAYER_TALENT_UPDATE")
