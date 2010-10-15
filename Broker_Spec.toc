@@ -1,10 +1,11 @@
-## Interface: 30300
+## Interface: 40000
 ## Author: Allez
-## Version: 30300.2
+## Version: 40000.2
 ## Title: Broker Spec
-## Notes: Spec Switcher for LDB
+## Notes: Spec Switcher
 
 Libs\CallbackHandler\LibStub\LibStub.lua
 Libs\CallbackHandler\CallBackHandler-1.0\CallbackHandler-1.0.lua
 Libs\LibDataBroker\LibDataBroker-1.1.lua
-spec.lua
+
+Broker_Spec.lua

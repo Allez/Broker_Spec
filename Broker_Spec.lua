@@ -1,5 +1,5 @@
-local timer = 0.5
 local dataobj = LibStub:GetLibrary('LibDataBroker-1.1'):NewDataObject('Spec', {type = "data source", text = 'no spec', icon = "Interface\\Icons\\Spell_Shadow_SacrificialShield", iconCoords = {0.065, 0.935, 0.065, 0.935}})
+local timer = 0
 
 function dataobj.OnLeave()
 	GameTooltip:SetClampedToScreen(true)
@@ -31,7 +31,7 @@ local OnUpdate = function(self, elapsed)
 	if timer > 0.5 then
 		local maxPoints, finalIcon, text = 0, "Interface\\Icons\\Spell_Shadow_SacrificialShield"
 		for tab = 1, 3 do
-			local _, icon, points = GetTalentTabInfo(tab,nil,nil,group)
+			local _, _, _,icon, points = GetTalentTabInfo(tab,nil,nil,group)
 			if points > maxPoints then
 				maxPoints = points
 				finalIcon = icon
@@ -43,7 +43,6 @@ local OnUpdate = function(self, elapsed)
 		if text ~= "00/00/00" then
 			self:SetScript('OnUpdate', nil)
 		end
-		timer = 0
 	end
 end
 
@@ -54,5 +53,5 @@ end
 local addon = CreateFrame('Frame')
 addon:SetScript('OnEvent', OnEvent)
 addon:RegisterEvent("CHARACTER_POINTS_CHANGED")
-addon:RegisterEvent("PLAYER_ENTERING_WORLD")
 addon:RegisterEvent("PLAYER_TALENT_UPDATE")
+addon:RegisterEvent("PLAYER_ENTERING_WORLD")
